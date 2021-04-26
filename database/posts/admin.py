@@ -1,7 +1,9 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import movies, users
+from .models import movie, user, viewer, manager
 
-admin.site.register(movies)
-admin.site.register(users)
+admin.site.register(movie)
+admin.site.register(user)
+admin.site.register(viewer)
+admin.site.register(manager)
