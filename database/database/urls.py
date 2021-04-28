@@ -20,5 +20,5 @@ from django.conf.urls import url
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('posts/', include('posts.urls')),
+    path('movies/', include('posts.urls')),
 ]

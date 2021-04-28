@@ -39,8 +39,8 @@ class manager(user):
 
 class email(models.Model):
     from_who = models.CharField(max_length=60)
-    subject = models.CharField(max_length=200)
-    message = models.CharField(max_length=1024)
+    subject = models.TextField(max_length=200)
+    message = models.TextField(max_length=1024)
     to_whom = models.CharField(max_length=60)
     date_sent = models.DateTimeField('date sent')
 
