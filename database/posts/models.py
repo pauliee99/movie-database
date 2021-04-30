@@ -50,6 +50,7 @@ class manager(user):
         return self.movies_added
 
 class email(models.Model):
+    id = models.AutoField(primary_key=True)
     from_who = models.CharField(max_length=60)
     subject = models.TextField(max_length=200)
     message = models.TextField(max_length=1024)

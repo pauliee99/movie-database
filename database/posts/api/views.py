@@ -207,6 +207,109 @@ class UsersDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
-        
-## More API Views soon... ##
 
+## Viewer API Views ##
+
+## Manager API Views ##
+
+## Email API Views ##
+
+from posts.models import email
+from .serializers import emailSerializer
+
+class EmailListApiView(APIView):
+
+    # 1. List all
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the email items
+        '''
+        emails = email.objects
+        serializer = emailSerializer(emails, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 2. Create
+    def post(self, request, *args, **kwargs):
+        '''
+        Create the email with given email data
+        '''
+        data = {
+            'from_who': request.data.get('from_who'),
+            'subject': request.data.get('subject'),
+            'message': request.data.get('message'),
+            'to_whom': request.data.get('to_whom'),
+            'date_sent': request.data.get('date_sent')
+        }
+        serializer = emailSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class EmailDetailApiView(APIView):
+
+    def get_object(self, email_id):
+        '''
+        Helper method to get the object with given email_id
+        '''
+        try:
+            return email.objects.get(id=email_id)
+        except email.DoesNotExist:
+            return None
+
+    # 3. Retrieve
+    def get(self, request, email_id, *args, **kwargs):
+        '''
+        Retrieves the email with given email_id
+        '''
+        email_instance = self.get_object(email_id)
+        if not email_instance:
+            return Response(
+                {"res": "Object with email id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = emailSerializer(email_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 4. Update
+    def put(self, request, email_id, *args, **kwargs):
+        '''
+        Updates the email item with given email_id if exists
+        '''
+        email_instance = self.get_object(email_id)
+        if not email_instance:
+            return Response(
+                {"res": "Object with email id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        data = {
+            'from_who': request.data.get('from_who'),
+            'subject': request.data.get('subject'),
+            'message': request.data.get('message'),
+            'to_whom': request.data.get('to_whom'),
+            'date_sent': request.data.get('date_sent')
+        }
+        serializer = emailSerializer(instance = email_instance, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # 5. Delete
+    def delete(self, request, email_id, *args, **kwargs):
+        '''
+        Deletes the email item with given email_id if exists
+        '''
+        email_instance = self.get_object(email_id)
+        if not email_instance:
+            return Response(
+                {"res": "Object with email id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        email_instance.delete()
+        return Response(
+            {"res": "Object deleted!"},
+            status=status.HTTP_200_OK
+        )
