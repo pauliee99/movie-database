@@ -8,7 +8,7 @@ class movie(models.Model):
     actors = models.TextField(max_length=512)
     genre = models.CharField(max_length=40)
     release_date = models.DateField()
-    rating = models.BigIntegerField()
+    rating = models.DecimalField(max_digits=3, decimal_places=1)
 
     class Meta:
         verbose_name_plural = 'movies'
