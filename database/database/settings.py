@@ -11,20 +11,36 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, True)
+)
+
+# reading .env file
+environ.Env.read_env()
+
+# False if not in os.environ
+DEBUG = env('DEBUG')
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ld#9vtno*_-(wc9*r5f(nn+k$(m4l#h)%q!5rqaulxq9_c7ru+'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -74,21 +90,16 @@ WSGI_APPLICATION = 'database.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
+# Parse database connection url strings like mysql://user:pass@127.0.0.1:8458/db
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'movies_db',
-        'USER': 'root',
-        'PASSWORD': 'mydbpasswd',
-        'HOST': '127.0.0.1',  # If localhost
-        'PORT': '3306',  # your database running port
+        # read os.environ
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST', default='127.0.0.1'),  # If localhost
+        'PORT': env('DB_PORT', default='3306'),  # your database running port
     }
 }
 
