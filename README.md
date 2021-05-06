@@ -12,7 +12,9 @@ cp database/.env.example database/.env
 ```
 
 [Install MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+
 [Create Database](https://dev.mysql.com/doc/refman/8.0/en/creating-database.html)
+
 Edit database/.env to define the MySQL Database you have just created
 
 ```bash
