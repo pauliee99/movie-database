@@ -4,6 +4,5 @@ from django.contrib import admin
 from .models import movie, user, viewer, manager
 
 admin.site.register(movie)
-admin.site.register(user)
 admin.site.register(viewer)
 admin.site.register(manager)
