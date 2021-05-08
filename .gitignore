@@ -109,4 +109,4 @@ GitHub.sublime-settings
 
 # Useless Shell Scripts  #
 start.sh
-stop.sh
+database/stop.sh
