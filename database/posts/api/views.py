@@ -1,6 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, viewsets
+
+## User API Views ##
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 ## Movie API Views ##
 
@@ -8,13 +16,13 @@ from posts.models import movie
 from .serializers import movieSerializer
 
 class MoviesListApiView(APIView):
-    
+
     # 1. List all
     def get(self, request, *args, **kwargs):
         '''
-        List all the movie items 
+        List all the movie items
         '''
-        
+
         movies = movie.objects
         serializer = movieSerializer(movies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -106,14 +114,14 @@ class MoviesDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
-
+"""
 ## Users API Views ##
 
 from posts.models import user
 from .serializers import userSerializer
 
 class UsersListApiView(APIView):
-	
+
 	# 1. List all
     def get(self, request, *args, **kwargs):
         '''
@@ -207,7 +215,7 @@ class UsersDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
-
+"""
 ## Viewer API Views ##
 
 ## Manager API Views ##
