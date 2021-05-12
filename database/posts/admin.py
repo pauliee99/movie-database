@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import movie, user, viewer, manager
+from .models import Movie
 
 class MovieAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -9,7 +9,4 @@ class MovieAdmin(admin.ModelAdmin):
         ('Date information', {'fields': ['release_date']}),
     ]
 
-admin.site.register(movie, MovieAdmin)
-
-admin.site.register(viewer)
-admin.site.register(manager)
+admin.site.register(Movie, MovieAdmin)

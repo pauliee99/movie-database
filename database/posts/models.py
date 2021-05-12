@@ -1,7 +1,6 @@
 from django.db import models
 
-# Create your models here.
-class movie(models.Model):
+class Movie(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     director = models.CharField(max_length=60)
@@ -16,40 +15,7 @@ class movie(models.Model):
     def __str__(self):
         return self.title
 
-class user(models.Model):
-    id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=50)
-    email = models.CharField(max_length=60)
-    password = models.TextField(max_length=512)
-    date_registered = models.DateTimeField('date registered')
-
-    class Meta:
-        verbose_name_plural = 'users'
-
-    def __str__(self):
-        return self.username
-
-class viewer(user):
-    movies_viewed = models.BigIntegerField()
-    movies_rated = models.BigIntegerField()
-    movies_loved = models.BigIntegerField()
-
-    class Meta:
-        verbose_name_plural = 'viewers'
-
-    def __str__(self):
-        return self.movies_viewed
-
-class manager(user):
-    movies_added = models.BigIntegerField()
-
-    class Meta:
-        verbose_name_plural = 'managers'
-
-    def __str__(self):
-        return self.movies_added
-
-class email(models.Model):
+class Email(models.Model):
     id = models.AutoField(primary_key=True)
     from_who = models.CharField(max_length=60)
     subject = models.TextField(max_length=200)

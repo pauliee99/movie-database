@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, permissions, viewsets
 
+"""
 ## User API Views ##
 from django.contrib.auth.models import User
 from .serializers import UserSerializer
@@ -9,11 +10,11 @@ from .serializers import UserSerializer
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
+"""
 ## Movie API Views ##
 
-from posts.models import movie
-from .serializers import movieSerializer
+from posts.models import Movie
+from .serializers import MovieSerializer
 
 class MoviesListApiView(APIView):
 
@@ -23,8 +24,8 @@ class MoviesListApiView(APIView):
         List all the movie items
         '''
 
-        movies = movie.objects
-        serializer = movieSerializer(movies, many=True)
+        movies = Movie.objects
+        serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
@@ -40,7 +41,7 @@ class MoviesListApiView(APIView):
             'release_date': request.data.get('release_date'),
             'rating': request.data.get("rating")
         }
-        serializer = movieSerializer(data=data)
+        serializer = MovieSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -54,8 +55,8 @@ class MoviesDetailApiView(APIView):
         Helper method to get the object with given movie_id
         '''
         try:
-            return movie.objects.get(id=movie_id)
-        except movie.DoesNotExist:
+            return Movie.objects.get(id=movie_id)
+        except Movie.DoesNotExist:
             return None
 
     # 3. Retrieve
@@ -70,7 +71,7 @@ class MoviesDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = movieSerializer(movie_instance)
+        serializer = MovieSerializer(movie_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
@@ -92,7 +93,7 @@ class MoviesDetailApiView(APIView):
             'release_date': request.data.get('release_date'),
             'rating': request.data.get("rating")
         }
-        serializer = movieSerializer(instance = movie_instance, data=data, partial = True)
+        serializer = MovieSerializer(instance = movie_instance, data=data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -215,15 +216,15 @@ class UsersDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
-"""
+
 ## Viewer API Views ##
 
 ## Manager API Views ##
-
+"""
 ## Email API Views ##
 
-from posts.models import email
-from .serializers import emailSerializer
+from posts.models import Email
+from .serializers import EmailSerializer
 
 class EmailListApiView(APIView):
 
@@ -232,8 +233,8 @@ class EmailListApiView(APIView):
         '''
         List all the email items
         '''
-        emails = email.objects
-        serializer = emailSerializer(emails, many=True)
+        emails = Email.objects
+        serializer = EmailSerializer(emails, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
@@ -248,7 +249,7 @@ class EmailListApiView(APIView):
             'to_whom': request.data.get('to_whom'),
             'date_sent': request.data.get('date_sent')
         }
-        serializer = emailSerializer(data=data)
+        serializer = EmailSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -262,8 +263,8 @@ class EmailDetailApiView(APIView):
         Helper method to get the object with given email_id
         '''
         try:
-            return email.objects.get(id=email_id)
-        except email.DoesNotExist:
+            return Email.objects.get(id=email_id)
+        except Email.DoesNotExist:
             return None
 
     # 3. Retrieve
@@ -278,7 +279,7 @@ class EmailDetailApiView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        serializer = emailSerializer(email_instance)
+        serializer = EmailSerializer(email_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 4. Update
@@ -299,7 +300,7 @@ class EmailDetailApiView(APIView):
             'to_whom': request.data.get('to_whom'),
             'date_sent': request.data.get('date_sent')
         }
-        serializer = emailSerializer(instance = email_instance, data=data, partial = True)
+        serializer = EmailSerializer(instance = email_instance, data=data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
