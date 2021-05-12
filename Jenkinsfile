@@ -17,8 +17,8 @@ pipeline {
                     python3 -m venv myvenv
                     source myvenv/bin/activate
                     pip install -r requirements.txt
-                    cd movies
-                    cp movies/.env.example movies/.env
+                    cd database
+                    cp database/.env.example database/.env
                     python manage.py makemigrations
                     python manage.py migrate
                     ./manage.py test'''

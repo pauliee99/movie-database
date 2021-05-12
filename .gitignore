@@ -3,6 +3,7 @@ myvenv/
 db/
 
 *.env
+*.env/example
 
 # Django #
 *.log
