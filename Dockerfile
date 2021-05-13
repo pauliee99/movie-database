@@ -17,6 +17,4 @@ EXPOSE 3000/tcp
 
 
 # Tell what to do when it starts as a container
-CMD["gunicorn", "database.wsgi:posts", "--bind", "127.0.0.1:8080"]
-
-# We have corrections to do!
+CMD["gunicorn", "database.wsgi:application", "--bind", "0.0.0.0:3000"]
