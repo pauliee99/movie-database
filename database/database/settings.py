@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #'posts',
     'posts.apps.PostsConfig',
     'rest_framework',
 ]
@@ -122,6 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'posts.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

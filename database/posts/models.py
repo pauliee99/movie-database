@@ -28,3 +28,19 @@ class Email(models.Model):
 
     def __str__(self):
         return self.message
+
+from django.contrib.auth.models import AbstractUser
+
+class User(AbstractUser):
+    is_viewer = models.BooleanField(default=False)
+    is_manager = models.BooleanField(default=False)
+
+class Viewer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    #movies_viewed = models.ManyToManyField(Movie, through='ViewedMovie')
+    #movies_rated = models.ManyToManyField(Movie, through='RatedMovie')
+    #movies_loved = models.ManyToManyField(Movie, through='LovedMovie')
+
+class Manager(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    #movies_added = models.ManyToManyField(Movie, through='AddedMovie')
