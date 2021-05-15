@@ -208,3 +208,109 @@ class EmailDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
+
+## User API Views ##
+
+from posts.models import User
+from .serializers import UserSerializer
+
+class UserListApiView(APIView):
+
+    # 1. List all
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the user items
+        '''
+        users = User.objects
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 2. Create
+    def post(self, request, *args, **kwargs):
+        '''
+        Create the user with given user data
+        '''
+        data = {
+            'password': request.data.get('password'),
+            'username': request.data.get('username'),
+            'first_name': request.data.get('first_name'),
+            'last_name': request.data.get('last_name'),
+            'email': request.data.get('email'),
+            'is_viewer': request.data.get('is_viewer'),
+            'is_manager': request.data.get('is_manager')
+        }
+        serializer = UserSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserDetailApiView(APIView):
+
+    def get_object(self, user_id):
+        '''
+        Helper method to get the object with given user_id
+        '''
+        try:
+            return User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return None
+
+    # 3. Retrieve
+    def get(self, request, user_id, *args, **kwargs):
+        '''
+        Retrieves the user with given user_id
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = UserSerializer(user_instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 4. Update
+    def put(self, request, user_id, *args, **kwargs):
+        '''
+        Updates the user item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        data = {
+            'password': request.data.get('password'),
+            'username': request.data.get('username'),
+            'first_name': request.data.get('first_name'),
+            'last_name': request.data.get('last_name'),
+            'email': request.data.get('email'),
+            'is_viewer': request.data.get('is_viewer'),
+            'is_manager': request.data.get('is_manager')
+        }
+        serializer = UserSerializer(instance = user_instance, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # 5. Delete
+    def delete(self, request, user_id, *args, **kwargs):
+        '''
+        Deletes the user item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user_instance.delete()
+        return Response(
+            {"res": "Object deleted!"},
+            status=status.HTTP_200_OK
+        )
