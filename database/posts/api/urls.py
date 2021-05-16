@@ -15,4 +15,5 @@ urlpatterns = [
     path('mails/<int:email_id>/', EmailDetailApiView.as_view()),
     path('users/', UserListApiView.as_view()),
     path('users/<int:user_id>', UserDetailApiView.as_view()),
+    path('users/<str:username>', UserDetailApiView.as_view()),
 ]

@@ -9,6 +9,9 @@ from .serializers import MovieSerializer
 
 class MoviesListApiView(APIView):
 
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+
     # 1. List all
     def get(self, request, *args, **kwargs):
         '''
@@ -40,6 +43,9 @@ class MoviesListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class MoviesDetailApiView(APIView):
+
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, movie_id):
         '''
@@ -114,6 +120,9 @@ from .serializers import EmailSerializer
 
 class EmailListApiView(APIView):
 
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+
     # 1. List all
     def get(self, request, *args, **kwargs):
         '''
@@ -143,6 +152,9 @@ class EmailListApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EmailDetailApiView(APIView):
+
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, email_id):
         '''
@@ -216,6 +228,9 @@ from .serializers import UserSerializer
 
 class UserListApiView(APIView):
 
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+
     # 1. List all
     def get(self, request, *args, **kwargs):
         '''
@@ -248,6 +263,9 @@ class UserListApiView(APIView):
 
 class UserDetailApiView(APIView):
 
+    # add permission to check if user is authenticated
+    permission_classes = [permissions.IsAuthenticated]
+
     def get_object(self, user_id):
         '''
         Helper method to get the object with given user_id
@@ -257,15 +275,27 @@ class UserDetailApiView(APIView):
         except User.DoesNotExist:
             return None
 
+    def get_object_by_username(self, username):
+        '''
+        Helper method to get the object with given username
+        '''
+        try:
+            return User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+
     # 3. Retrieve
-    def get(self, request, user_id, *args, **kwargs):
+    def get(self, request, user_id, username=None, *args, **kwargs):
         '''
-        Retrieves the user with given user_id
+        Retrieves the user with given user_id or username
         '''
-        user_instance = self.get_object(user_id)
+        if user_id:
+            user_instance = self.get_object(user_id)
+        elif username:
+            user_instance = self.get_object_by_username(username)
         if not user_instance:
             return Response(
-                {"res": "Object with user id does not exists"},
+                {"res": "Object with your info does not exists"},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
