@@ -10,7 +10,7 @@ from .serializers import MovieSerializer
 class MoviesListApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     # 1. List all
     def get(self, request, *args, **kwargs):
@@ -45,7 +45,7 @@ class MoviesListApiView(APIView):
 class MoviesDetailApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, movie_id):
         '''
@@ -121,7 +121,7 @@ from .serializers import EmailSerializer
 class EmailListApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     # 1. List all
     def get(self, request, *args, **kwargs):
@@ -154,7 +154,7 @@ class EmailListApiView(APIView):
 class EmailDetailApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, email_id):
         '''
@@ -229,7 +229,7 @@ from .serializers import UserSerializer
 class UserListApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     # 1. List all
     def get(self, request, *args, **kwargs):
@@ -264,7 +264,7 @@ class UserListApiView(APIView):
 class UserDetailApiView(APIView):
 
     # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, user_id):
         '''
@@ -285,7 +285,7 @@ class UserDetailApiView(APIView):
             return None
 
     # 3. Retrieve
-    def get(self, request, user_id, username=None, *args, **kwargs):
+    def get(self, request, user_id=None, username=None, *args, **kwargs):
         '''
         Retrieves the user with given user_id or username
         '''
