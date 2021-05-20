@@ -6,6 +6,10 @@ from .views import (
     EmailDetailApiView,
     UserListApiView,
     UserDetailApiView,
+    ManagerListApiView,
+    ManagerDetailApiView,
+    ViewerListApiView,
+    ViewerDetailApiView,
 )
 
 urlpatterns = [
@@ -16,4 +20,8 @@ urlpatterns = [
     path('users/', UserListApiView.as_view()),
     path('users/<int:user_id>', UserDetailApiView.as_view()),
     path('users/<str:username>', UserDetailApiView.as_view()),
+    path('managers/', ManagerListApiView.as_view()),
+    path('managers/<int:user_id>', ManagerDetailApiView.as_view()),
+    path('viewers/', ViewerListApiView.as_view()),
+    path('viewers/<int:user_id>', ViewerDetailApiView.as_view()),
 ]

@@ -16,3 +16,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = ["id", "password", "last_login", "is_superuser", "username", "first_name", "last_name", "email", "is_staff", "is_active", "date_joined", "is_viewer", "is_manager"]
 
+class ManagerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Manager
+        fields = ["user_id"]
+
+class ViewerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Viewer
+        fields = ["user_id"]

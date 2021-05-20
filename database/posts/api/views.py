@@ -344,3 +344,173 @@ class UserDetailApiView(APIView):
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
         )
+
+## Manager API Views ##
+
+from posts.models import Manager
+from .serializers import ManagerSerializer
+
+class ManagerListApiView(APIView):
+
+    # add permission to check if user is authenticated
+    #permission_classes = [permissions.IsAuthenticated]
+
+    # 1. List all
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the manager items
+        '''
+        users = Manager.objects
+        serializer = ManagerSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 2. Create
+    def post(self, request, *args, **kwargs):
+        '''
+        Create the manager with given manager data
+        '''
+        data = {
+            'user_id': request.data.get('user_id')
+        }
+        serializer = ManagerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ManagerDetailApiView(APIView):
+
+    # add permission to check if user is authenticated
+    #permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, user_id):
+        '''
+        Helper method to get the object with given user_id
+        '''
+        try:
+            return Manager.objects.get(id=user_id)
+        except Manager.DoesNotExist:
+            return None
+
+    # 3. Update
+    def put(self, request, user_id, *args, **kwargs):
+        '''
+        Updates the manager item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        data = {
+            'user_id': request.data.get('user_id')
+        }
+        serializer = ManagerSerializer(instance = user_instance, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # 4. Delete
+    def delete(self, request, user_id, *args, **kwargs):
+        '''
+        Deletes the manager item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user_instance.delete()
+        return Response(
+            {"res": "Object deleted!"},
+            status=status.HTTP_200_OK
+        )
+
+## Viewer API Views ##
+
+from posts.models import Viewer
+from .serializers import ViewerSerializer
+
+class ViewerListApiView(APIView):
+
+    # add permission to check if user is authenticated
+    #permission_classes = [permissions.IsAuthenticated]
+
+    # 1. List all
+    def get(self, request, *args, **kwargs):
+        '''
+        List all the viewer items
+        '''
+        users = Viewer.objects
+        serializer = ViewerSerializer(users, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    # 2. Create
+    def post(self, request, *args, **kwargs):
+        '''
+        Create the viewer with given viewer data
+        '''
+        data = {
+            'user_id': request.data.get('user_id')
+        }
+        serializer = ViewerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ViewerDetailApiView(APIView):
+
+    # add permission to check if user is authenticated
+    #permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self, user_id):
+        '''
+        Helper method to get the object with given user_id
+        '''
+        try:
+            return Viewer.objects.get(id=user_id)
+        except Viewer.DoesNotExist:
+            return None
+
+    # 3. Update
+    def put(self, request, user_id, *args, **kwargs):
+        '''
+        Updates the viewer item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        data = {
+            'user_id': request.data.get('user_id')
+        }
+        serializer = ViewerSerializer(instance = user_instance, data=data, partial = True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # 4. Delete
+    def delete(self, request, user_id, *args, **kwargs):
+        '''
+        Deletes the viewer item with given user_id if exists
+        '''
+        user_instance = self.get_object(user_id)
+        if not user_instance:
+            return Response(
+                {"res": "Object with user id does not exists"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        user_instance.delete()
+        return Response(
+            {"res": "Object deleted!"},
+            status=status.HTTP_200_OK
+        )
