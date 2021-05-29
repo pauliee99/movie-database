@@ -1,5 +1,5 @@
 # movie-database
-Django database for devops assignment
+Django database system for devops assignment
 
 ## Clone and run project
 ```bash
