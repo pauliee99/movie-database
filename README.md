@@ -1,6 +1,7 @@
 # movie-database
 Django database system for devops assignment
 test
+jenkins-test2
 
 ## Clone and run project
 ```bash
