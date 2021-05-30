@@ -27,9 +27,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sshagent (credentials: ['']) {
+                sshagent (credentials: ['ssh-deploy']) {
 
                     sh '''
+			pwd
+			echo $WORKSPACE
+			ansible-playbook -i ~/workspace/ansible-test/hosts.yml -l deploymentservers ~/workspace/ansible-test/playbooks/check.yml
                     '''
                 }
             }
