@@ -16,7 +16,7 @@ pipeline {
                 sh '''
                     python3 -m venv myvenv
                     source ./myvenv/bin/activate
-                    pip install -r requirements.txt
+B                    pip install -r requirements.txt
                     cd database
                     cp database/.env.example database/.env
                     python manage.py makemigrations
@@ -33,7 +33,7 @@ pipeline {
                     sh '''
 			pwd
 			echo $WORKSPACE
-			ansible-playbook -i ~/workspace/ansible-test/hosts.yml -l deploymentservers ~/workspace/ansible-test/playbooks/check.yml
+			ansible-playbook -i ~/workspace/movie-ansible/hosts.yml -l deploymentservers ~/workspace/movie-ansible/playbooks/check.yml
                     '''
                 }
             }
