@@ -1,8 +1,8 @@
-from django.urls import path, include
-from django.conf.urls import url
+#from django.urls import include #path, include
+from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
-    path('api/', include('posts.api.urls')),
-    path('docs/', views.documentation, name='docs'),
+    url('api/', include('posts.api.urls')),
+    url('docs/', views.documentation, name='docs'),
 ]
