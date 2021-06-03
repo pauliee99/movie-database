@@ -14,13 +14,12 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
-		    #!/bin/bash
                     python3 -m venv myvenv
-                    #!/bin/bash; source ./myvenv/bin/activate
+                    source ./myvenv/bin/activate
                     pip install -r requirements.txt
                     cd database
                     cp database/.env.example database/.env
-                    python3 manage.py makemigrations
+                    python manage.py makemigrations
                     python manage.py migrate
                     ./manage.py test
 		    '''
