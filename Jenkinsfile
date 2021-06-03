@@ -16,7 +16,7 @@ pipeline {
                 sh '''
                     python3 -m venv myvenv
                     source ./myvenv/bin/activate
-B                    pip install -r requirements.txt
+                    pip install -r requirements.txt
                     cd database
                     cp database/.env.example database/.env
                     python manage.py makemigrations
