@@ -20,7 +20,7 @@ pipeline {
                     pip install -r requirements.txt
                     cd database
                     cp database/.env.example database/.env
-                    python manage.py makemigrations
+                    python3 manage.py makemigrations
                     python manage.py migrate
                     ./manage.py test
 		    '''
