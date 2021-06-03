@@ -16,7 +16,7 @@ pipeline {
                 sh '''
 		    #!/bin/bash
                     python3 -m venv myvenv
-                    sudo ./myvenv/bin/activate
+                    #!/bin/bash; source ./myvenv/bin/activate
                     pip install -r requirements.txt
                     cd database
                     cp database/.env.example database/.env
