@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+     - ./myproject/myproject/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_volume:/app/static
+
+volumes:
+  static_volume:
