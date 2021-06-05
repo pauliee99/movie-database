@@ -33,7 +33,10 @@ pipeline {
                     sh '''
 			pwd
 			echo $WORKSPACE
-			ansible-playbook -i ~/workspace/movie-ansible/hosts.yml -l deploymentservers ~/workspace/movie-ansible/playbooks/check.yml
+			cd ~/workspace/movie-ansible
+                        chmod 777 define.sh
+                        ./define.sh > hosts.yml
+                        ansible-playbook -l deploymentservers playbooks/check.yml
                     '''
                 }
             }
