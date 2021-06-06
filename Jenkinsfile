@@ -36,7 +36,7 @@ pipeline {
 			cd ~/workspace/movie-ansible
                         chmod 777 define.sh
                         ./define.sh > hosts.yml
-                        ansible-playbook -l deploymentservers playbooks/check.yml
+                        ansible-playbook -l deploymentservers playbooks/mysql-database.yml
                     '''
                 }
             }
