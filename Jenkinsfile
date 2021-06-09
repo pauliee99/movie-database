@@ -34,9 +34,12 @@ pipeline {
 			pwd
 			echo $WORKSPACE
 			cd ~/workspace/movie-ansible
+                        chmod 777 define_user_dir.sh
+                        ./define_user_dir.sh > group_vars/deploymentservers.yml
                         chmod 777 define.sh
                         ./define.sh > hosts.yml
                         ansible-playbook -l deploymentservers playbooks/mysql-database.yml
+                        ansible-playbook -l deploymentservers playbooks/movie-database-install.yml
                     '''
                 }
             }
