@@ -1,6 +1,22 @@
 version: "3"
 
 services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD: example
+      - MYSQL_DATABASE: test
+      - MYSQL_USER: test_user
+      - MYSQL_PASSWORD: testpasswd
+    volumes:
+      - dj_mysql_data:/var/lib/mysql/data/
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3050:3050
   django:
     build:
       context: .
@@ -13,4 +29,5 @@ services:
       - static_volume:/app/static
 
 volumes:
+  dj_mysql_data:
   static_volume:
