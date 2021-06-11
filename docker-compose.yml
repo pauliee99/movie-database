@@ -3,7 +3,6 @@ version: "3"
 services:
   db:
     image: mysql
-    #command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD="example"
@@ -14,11 +13,6 @@ services:
       - MYSQL_RANDOM_ROOT_PASSWORD="no"
     volumes:
       - db_data:/var/lib/mysql
-  #adminer:
-    #image: adminer
-    #restart: always
-    #ports:
-      #- 3306:3306
   django_db:
     build:
       context: .
