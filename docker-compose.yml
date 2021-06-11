@@ -3,16 +3,17 @@ version: "3"
 services:
   db:
     image: mysql
+    ports:
+      - "3306:3306"
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD="example"
-      - MYSQL_DATABASE="test"
-      - MYSQL_USER="test_user"
-      - MYSQL_PASSWORD="testpasswd"
-      - MYSQL_ALLOW_EMPTY_PASSWORD="no"
-      - MYSQL_RANDOM_ROOT_PASSWORD="no"
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test_user
+      - MYSQL_PASSWORD=testpasswd
     volumes:
       - db_data:/var/lib/mysql
+
   django_db:
     build:
       context: .
@@ -20,12 +21,12 @@ services:
     env_file:
      - ./database/database/.env
     ports:
-      - "80:3000"
+      - "3000:3000"
     volumes:
       - static_volume:/app/static
     depends_on:
       - db
 
 volumes:
-  db_data: {}
-  static_volume: {}
+  db_data:
+  static_volume:
