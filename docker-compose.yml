@@ -11,23 +11,25 @@ services:
       - MYSQL_USER: test_user
       - MYSQL_PASSWORD: testpasswd
     volumes:
-      - dj_mysql_data:/var/lib/mysql/data/
+      - db_data:/var/lib/mysql
   adminer:
     image: adminer
     restart: always
     ports:
-      - 3050:3050
-  django:
+      - 3306:3306
+  django_db:
     build:
       context: .
       dockerfile: Dockerfile
     env_file:
-     - ./myproject/myproject/.env
+     - ./database/database/.env
     ports:
-      - "8000:8000"
+      - "3000:3000"
     volumes:
       - static_volume:/app/static
+    depends_on:
+      - db
 
 volumes:
-  dj_mysql_data:
-  static_volume:
+  db_data: {}
+  static_volume: {}
