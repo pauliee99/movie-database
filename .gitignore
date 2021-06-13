@@ -1,6 +1,6 @@
 #virtualenv
 myvenv/
-db/
+db_venv/
 
 *.env
 
