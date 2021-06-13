@@ -33,4 +33,4 @@ RUN  python manage.py collectstatic --noinput
 EXPOSE 3000/tcp
 
 # Tell what to do when it starts as a container
-CMD ["gunicorn", "myproject.wsgi:application", "--bind", "0.0.0.0:3000"]
+CMD ["gunicorn", "database.wsgi:application", "--bind", "0.0.0.0:3000"]
