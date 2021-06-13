@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: django-db
+  template:
+    metadata:
+      labels:
+        component: django-db
+    spec:
+      initContainers:
+        - name: django-init
+          image: tsadimas/django
+          command: ["/bin/bash"]
+          args: ["-c", "python manage.py makemigrations && python manage.py migrate"]
+      containers:
+        - name: django-db
+          image: tsadimas/django
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: django-config
+          imagePullPolicy: Always
