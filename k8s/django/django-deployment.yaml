@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: django
+  name: django-db
 spec:
   replicas: 1
   selector:
@@ -12,17 +12,28 @@ spec:
       labels:
         component: django-db
     spec:
-      initContainers:
-        - name: django-init
-          image: tsadimas/django
-          command: ["/bin/bash"]
-          args: ["-c", "python manage.py makemigrations && python manage.py migrate"]
+      #initContainers:
+      #  - name: django-init
+      #    image: bel_panos/movie-db
+      #    command: ["/bin/bash"]
+      #    args: ["-c", "python manage.py makemigrations && python manage.py migrate"]
       containers:
         - name: django-db
-          image: tsadimas/django
+          image: bel_panos/movie-db:latest
+          #- auth:
+          #   username:
+          #    valueFrom:
+          #      secretKeyRef:
+          #        name: docker-creds
+          #        key: DOCKERUSER
+          #   password:
+          #    valueFrom:
+          #      secretKeyRef:
+          #        name: docker-creds
+          #        key: DOCKERPASSWORD
           ports:
-            - containerPort: 8000
+            - containerPort: 3000
           envFrom:
             - configMapRef:
-                name: django-config
+                name: django-db-config
           imagePullPolicy: Always
