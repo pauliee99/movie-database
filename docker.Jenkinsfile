@@ -44,5 +44,21 @@ pipeline {
                 '''
             }
         }
+
+        stage('DOCKER') {
+            steps {
+              sshagent (credentials: ['ssh-deploy']) {
+                sh '''
+                    pwd
+		    echo $WORKSPACE
+		    cd ~/workspace/movie-ansible
+                    chmod 777 define_docker.sh
+                    ./define_docker.sh > hosts.yml
+                    ansible-playbook -l deploymentservers playbooks/docker/docker_deployment.yml
+                '''
+              }
+            }
+        }
+
     }
 }
