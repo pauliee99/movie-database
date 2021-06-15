@@ -47,7 +47,7 @@ pipeline {
 
         stage('DOCKER') {
             steps {
-              sshagent (credentials: ['ssh-deploy']) {
+              sshagent (credentials: ['ssh-docker']) {
                 sh '''
                     pwd
 		    echo $WORKSPACE
