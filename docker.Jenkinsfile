@@ -45,7 +45,22 @@ pipeline {
             }
         }
 
-        stage('DOCKER') {
+        stage('Docker Deploy') {
+            environment {
+                DB_ROOT_PASSWD=credentials('db-root-passwd')
+                DB_NAME=credentials('db-name')
+                DB_USER=credentials('db-user')
+                DB_PASSWD=credentials('db-passwd')
+                DB_SECRET_KEY=credentials('db-key')
+                DB_HOST=credentials('db-host')
+                DB_PORT=credentials('db-port')
+                MAIL_SECRET_KEY=credentials('mail-key')
+                MAIL_USER=credentials('devops-mail-address')
+                MAIL_PASSWD=credentials('devops-mail-passwd')
+                DB_FULL_URL=credentials('db-system-url')
+                MOVIES_SECRET_KEY=credentials('main-system-key')
+                MAIL_URL=credentials('mail-system-url')
+            }
             steps {
               sshagent (credentials: ['ssh-docker']) {
                 sh '''
@@ -54,7 +69,20 @@ pipeline {
 		    cd ~/workspace/movie-ansible
                     chmod 777 define_docker.sh
                     ./define_docker.sh > hosts.yml
-                    ansible-playbook -l deploymentservers playbooks/docker/docker_deployment.yml
+                    ansible-playbook -l deploymentservers playbooks/docker/docker_deployment.yml \ 
+                    -e DB_ROOT_PASSWD=$DB_ROOT_PASSWD \
+                    -e DB_NAME=$DB_NAME \
+                    -e DB_USER=$DB_USER \
+                    -e DB_PASSWD=$DB_PASSWD \
+                    -e DB_SECRET_KEY=$DB_SECRET_KEY \
+                    -e DB_HOST=$DB_HOST \
+                    -e DB_PORT=$DB_PORT \
+                    -e MAIL_SECRET_KEY=$MAIL_SECRET_KEY \
+                    -e MAIL_USER=$MAIL_USER \
+                    -e MAIL_PASSWD=$MAIL_PASSWD \
+                    -e DB_FULL_URL=$DB_FULL_URL \
+                    -e MOVIES_SECRET_KEY=$MOVIES_SECRET_KEY \
+                    -e MAIL_URL=$MAIL_URL
                 '''
               }
             }
