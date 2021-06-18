@@ -63,7 +63,7 @@ pipeline {
 		    cd ~/workspace/movie-ansible
                     chmod 777 define_docker.sh
                     ./define_docker.sh > hosts.yml
-                    ansible-playbook -l deploymentservers playbooks/docker/docker_deployment.yml \
+                    ansible-playbook -l deploymentservers playbooks/docker/docker_movies_db.yml \
                     -e DB_ROOT_PASSWD=$DB_ROOT_PASSWD \
                     -e DB_NAME=$DB_NAME \
                     -e DB_USER=$DB_USER \
