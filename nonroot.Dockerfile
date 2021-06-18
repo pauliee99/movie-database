@@ -30,8 +30,9 @@ USER appuser:appuser
 
 RUN  python manage.py collectstatic --noinput
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN python manage.py makemigrations
+
+RUN python manage.py migrate
 
 EXPOSE 3000/tcp
 
