@@ -54,12 +54,6 @@ pipeline {
                 DB_SECRET_KEY=credentials('db-key')
                 DB_HOST=credentials('db-host')
                 DB_PORT=credentials('db-port')
-                MAIL_SECRET_KEY=credentials('mail-key')
-                MAIL_USER=credentials('devops-mail-address')
-                MAIL_PASSWD=credentials('devops-mail-passwd')
-                DB_FULL_URL=credentials('db-system-url')
-                MOVIES_SECRET_KEY=credentials('main-system-key')
-                MAIL_URL=credentials('mail-system-url')
             }
             steps {
               sshagent (credentials: ['ssh-docker']) {
@@ -76,13 +70,7 @@ pipeline {
                     -e DB_PASSWD=$DB_PASSWD \
                     -e DB_SECRET_KEY=$DB_SECRET_KEY \
                     -e DB_HOST=$DB_HOST \
-                    -e DB_PORT=$DB_PORT \
-                    -e MAIL_SECRET_KEY=$MAIL_SECRET_KEY \
-                    -e MAIL_USER=$MAIL_USER \
-                    -e MAIL_PASSWD=$MAIL_PASSWD \
-                    -e DB_FULL_URL=$DB_FULL_URL \
-                    -e MOVIES_SECRET_KEY=$MOVIES_SECRET_KEY \
-                    -e MAIL_URL=$MAIL_URL
+                    -e DB_PORT=$DB_PORT
                 '''
               }
             }

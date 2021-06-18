@@ -30,6 +30,8 @@ USER appuser:appuser
 
 RUN  python manage.py collectstatic --noinput
 
+RUN  python manage.py makemigrations && python manage.py migrate
+
 EXPOSE 3000/tcp
 
 # Tell what to do when it starts as a container
