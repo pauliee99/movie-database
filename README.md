@@ -50,6 +50,7 @@ First, log in using your superuser credentials: [Link](http://127.0.0.1:3000/mov
 
 ## Jenkins CI/CD Procedure
 Jenkinsfile: describes the procedure so Jenkins server is able to deploy the component using Ansible
+
 docker.Jenkinsfile: describes the procedure so Jenkins server is able to deploy the component in Docker environment (VM)
 
 ### Docker
