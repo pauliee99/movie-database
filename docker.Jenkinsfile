@@ -18,7 +18,7 @@ pipeline {
                     source ./myvenv/bin/activate
                     pip install -r requirements.txt
                     cd database
-                    cp database/.env.example.docker database/.env
+                    cp database/.env.example database/.env
                     python manage.py makemigrations
                     python manage.py migrate
                     ./manage.py test
