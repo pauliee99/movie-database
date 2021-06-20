@@ -96,26 +96,6 @@ class MoviesDetailApiView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    # extra method to use it on deletion
-    def inform_all_id(self):
-        id = 1
-        while True:
-            movie = self.get_object(id)
-            if not movie:
-                return
-            data = {
-                'id': id,
-                'title': movie.title,
-                'director': movie.director,
-                'actors': movie.actors,
-                'genre': movie.genre,
-                'release_date': movie.release_date,
-                'rating': movie.rating
-            }
-            serializer = MovieSerializer(instance = movie, data=data, partial = True)
-            if serializer.is_valid():
-                serializer.save()
-
     # 5. Delete
     def delete(self, request, movie_id, *args, **kwargs):
         '''
@@ -129,7 +109,6 @@ class MoviesDetailApiView(APIView):
             )
         Movie.objects.get(id=movie_id).delete()
         del movie_instance
-        self.inform_all_id()
         return Response(
             {"res": "Object deleted!"},
             status=status.HTTP_200_OK
