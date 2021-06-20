@@ -10,6 +10,19 @@ pipeline {
                 
             }
         }
+
+        stage('Push mysql image for test and docker push'){
+            steps {
+                sh '''
+                    docker pull mysql
+                    docker run --name=mysql_test_server -d mysql \
+                    --env MYSQL_ROOT_PASSWORD='example' \
+                    --env MYSQL_DATABASE='test' \
+                    --env MYSQL_USER='test_user' \
+                    --env MYSQL_PASSWORD='testpasswd'
+                    '''
+            }
+        }
         
         stage('Test') {
             steps {
@@ -18,7 +31,7 @@ pipeline {
                     source ./myvenv/bin/activate
                     pip install -r requirements.txt
                     cd database
-                    cp database/.env.example database/.env
+                    cp database/.env.example.docker database/.env
                     python manage.py makemigrations
                     python manage.py migrate
                     ./manage.py test
