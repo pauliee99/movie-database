@@ -48,3 +48,9 @@ python manage.py runserver 3000
 ## Check for proper running
 First, log in using your superuser credentials: [Link](http://127.0.0.1:3000/movies/api/)
 
+## Jenkins CI/CD Procedure
+Jenkinsfile: describes the procedure so Jenkins server is able to deploy the component using Ansible
+docker.Jenkinsfile: describes the procedure so Jenkins server is able to deploy the component in Docker environment (VM)
+
+### Docker
+nonroot.Dockerfile: describes the steps so the docker image can be built without being root users
