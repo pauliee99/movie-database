@@ -110,3 +110,5 @@ GitHub.sublime-settings
 # Useless Shell Scripts  #
 start.sh
 database/stop.sh
+
+migrations
