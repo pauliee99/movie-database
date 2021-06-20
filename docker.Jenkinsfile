@@ -11,18 +11,18 @@ pipeline {
             }
         }
 
-        stage('Push mysql image for test and docker push'){
-            steps {
-                sh '''
-                    docker pull mysql
-                    docker run --name=mysql_test_server -d mysql \
-                    --env MYSQL_ROOT_PASSWORD='example' \
-                    --env MYSQL_DATABASE='test' \
-                    --env MYSQL_USER='test_user' \
-                    --env MYSQL_PASSWORD='testpasswd'
-                    '''
-            }
-        }
+        #stage('Push mysql image for test and docker push'){
+        #    steps {
+        #        sh '''
+        #            docker pull mysql
+        #            docker run --name=mysql_test_server -d mysql \
+        #            --env MYSQL_ROOT_PASSWORD='example' \
+        #            --env MYSQL_DATABASE='test' \
+        #            --env MYSQL_USER='test_user' \
+        #            --env MYSQL_PASSWORD='testpasswd'
+        #            '''
+        #    }
+        #}
         
         stage('Test') {
             steps {
