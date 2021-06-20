@@ -11,7 +11,7 @@ pipeline {
             }
         }
 
-        #stage('Push mysql image for test and docker push'){
+        # stage('Push mysql image for test and docker push'){
         #    steps {
         #        sh '''
         #            docker pull mysql
@@ -22,7 +22,7 @@ pipeline {
         #            --env MYSQL_PASSWORD='testpasswd'
         #            '''
         #    }
-        #}
+        # }
         
         stage('Test') {
             steps {
