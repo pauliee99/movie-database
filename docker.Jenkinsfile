@@ -54,6 +54,7 @@ pipeline {
                 DB_SECRET_KEY=credentials('db-key')
                 DB_HOST=credentials('db-host')
                 DB_PORT=credentials('db-port')
+                ALLOWED_HOSTS='movies-management-project'
             }
             steps {
               sshagent (credentials: ['ssh-docker']) {
@@ -70,7 +71,8 @@ pipeline {
                     -e DB_PASSWD=$DB_PASSWD \
                     -e DB_SECRET_KEY=$DB_SECRET_KEY \
                     -e DB_HOST=$DB_HOST \
-                    -e DB_PORT=$DB_PORT
+                    -e DB_PORT=$DB_PORT \
+                    -e ALLOWED_HOSTS=$ALLOWED_HOSTS
                 '''
               }
             }
