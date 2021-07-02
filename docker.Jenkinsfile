@@ -52,7 +52,7 @@ pipeline {
                 DB_USER=credentials('db-user')
                 DB_PASSWD=credentials('db-passwd')
                 DB_SECRET_KEY=credentials('db-key')
-                DB_HOST='MySQLserver'
+                DB_HOST='http://MySQLserver'
                 DB_PORT=credentials('db-port')
                 ALLOWED_HOSTS='movies-management-project'
             }
