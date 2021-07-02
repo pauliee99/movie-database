@@ -29,8 +29,8 @@ RUN chown -R appuser:appuser /app
 USER appuser:appuser
 
 RUN  python manage.py collectstatic --noinput
-# RUN  python manage.py makemigrations
-# RUN  python manage.py migrate
+RUN  python manage.py makemigrations
+RUN  python manage.py migrate
 
 EXPOSE 3000/tcp
 
