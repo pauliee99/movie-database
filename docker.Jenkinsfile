@@ -34,6 +34,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    cp database/.env.docker database/.env
                     echo $BUILD_ID
                     COMMIT_ID=$(git rev-parse --short HEAD)
                     echo $COMMIT_ID
